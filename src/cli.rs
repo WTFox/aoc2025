@@ -9,6 +9,9 @@ use crate::days::*;
 enum ParseError {
     #[error("Day not implemented: {0}")]
     NotImplemented(u8),
+
+    #[error("No input file found: {0}")]
+    NoInputFile(u8),
 }
 
 #[derive(Parser, Debug)]
@@ -22,18 +25,29 @@ pub fn parse_args() -> Result<Args> {
     Ok(Args::try_parse()?)
 }
 
-fn read_input(day: u8) -> String {
-    let filename = format!("inputs/day{:02}.txt", day);
-    fs::read_to_string(filename).expect("Something went wrong reading the file")
+fn read_input(day: u8) -> Result<String> {
+    match fs::read_to_string(format!("inputs/day{:02}.txt", day)) {
+        Ok(val) => Ok(val),
+        _ => anyhow::bail!(ParseError::NoInputFile(day)),
+    }
 }
 
 pub fn run(args: Args) -> Result<()> {
     let day = args.day;
+    println!();
+    println!("Day {:02}", day);
+    println!();
     match day {
         1 => {
-            let input = read_input(day);
-            println!("Part one: {}", day01::part_one(&input));
-            println!("Part two: {}", day01::part_two(&input));
+            let input = read_input(day)?;
+            println!("  Part one: {}", day01::part_one(&input));
+            println!("  Part two: {}", day01::part_two(&input));
+            Ok(())
+        }
+        2 => {
+            let input = read_input(day)?;
+            println!("  Part one: {}", day02::part_one(&input));
+            println!("  Part two: {}", day02::part_two(&input));
             Ok(())
         }
         _ => anyhow::bail!(ParseError::NotImplemented(day)),
