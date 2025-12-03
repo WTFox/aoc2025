@@ -59,17 +59,17 @@ mod tests {
 
     #[test]
     fn test_is_repeating() {
-        assert!(is_repeating("11", true));
-        assert!(is_repeating("22", true));
-        assert!(is_repeating("99", true));
-        assert!(is_repeating("111", true));
         assert!(is_repeating("1010", true));
+        assert!(is_repeating("11", true));
+        assert!(is_repeating("111", true));
         assert!(is_repeating("1188511885", true));
+        assert!(is_repeating("2121212121", true));
+        assert!(is_repeating("22", true));
         assert!(is_repeating("222222", true));
-        assert!(is_repeating("446446", true));
         assert!(is_repeating("38593859", true));
+        assert!(is_repeating("446446", true));
         assert!(is_repeating("565656", true));
         assert!(is_repeating("824824824", true));
-        assert!(is_repeating("2121212121", true));
+        assert!(is_repeating("99", true));
     }
 }
