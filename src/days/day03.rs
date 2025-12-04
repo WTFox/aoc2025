@@ -30,25 +30,21 @@ pub fn part_one(input: &str) -> i64 {
 
 fn process_bank(bank: &[i64]) -> i64 {
     let mut new_bank = vec![];
-    for i in 11..0 {
-        new_bank.push(find_largest(bank, 11 - i, bank.len() - i).1);
+    let mut last_index = 0;
+    for i in 0..12 {
+        let start = i + last_index;
+        let stop = bank.len() - 11 + i;
+        let (index, largest) = find_largest(bank, start, stop);
+        last_index = index + last_index;
+        new_bank.push(largest);
     }
-
-    println!("{:?}", new_bank);
-
-    0
-
-    // let mut new_bank = vec![];
-    // for i in 0..12 {
-    //     new_bank.push(find_largest(&bank, i, bank.len()).1);
-    // }
-    // new_bank
-    //     .iter()
-    //     .map(|&x| x.to_string())
-    //     .collect::<Vec<_>>()
-    //     .concat()
-    //     .parse()
-    //     .unwrap()
+    new_bank
+        .iter()
+        .map(|&x| x.to_string())
+        .collect::<Vec<_>>()
+        .concat()
+        .parse()
+        .unwrap()
 }
 
 pub fn part_two(input: &str) -> i64 {
