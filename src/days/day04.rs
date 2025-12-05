@@ -1,7 +1,7 @@
-use pathfinding::matrix::Matrix;
+use crate::{Grid, Point};
 
 pub fn part_one(input: &str) -> usize {
-    let grid = build_grid(input);
+    let grid = Grid::from_str(input);
     all_tp_locations(&grid)
         .iter()
         .filter(|&&p| tp_neighbor_count_less_than_four(&grid, p))
@@ -9,7 +9,7 @@ pub fn part_one(input: &str) -> usize {
 }
 
 pub fn part_two(input: &str) -> usize {
-    let mut grid = build_grid(input);
+    let mut grid = Grid::from_str(input);
     let mut removed = 0;
 
     loop {
@@ -29,28 +29,25 @@ pub fn part_two(input: &str) -> usize {
     removed
 }
 
-fn build_grid(input: &str) -> Matrix<char> {
-    Matrix::from_rows(input.trim().lines().map(|l| l.chars())).unwrap()
-}
-
-fn remove_tp_at_locations(grid: &mut Matrix<char>, locations: Vec<(usize, usize)>) {
+fn remove_tp_at_locations(grid: &mut Grid<char>, locations: Vec<Point>) {
     locations
         .iter()
         .for_each(|&p| *grid.get_mut(p).unwrap() = '.');
 }
 
-fn tp_neighbor_count_less_than_four(grid: &Matrix<char>, p: (usize, usize)) -> bool {
-    grid.neighbours(p, true)
+fn tp_neighbor_count_less_than_four(grid: &Grid<char>, p: Point) -> bool {
+    grid.neighbors8(p)
+        .into_iter()
         .filter(|&p| grid.get(p).unwrap() == &'@')
         .count()
         < 4
 }
 
-fn all_tp_locations(grid: &Matrix<char>) -> Vec<(usize, usize)> {
-    grid.items()
+fn all_tp_locations(grid: &Grid<char>) -> Vec<Point> {
+    grid.iter()
         .filter(|(_, &v)| v == '@')
         .map(|(p, _)| p)
-        .collect::<Vec<_>>()
+        .collect()
 }
 
 #[cfg(test)]
