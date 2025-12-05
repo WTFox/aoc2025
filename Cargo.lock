@@ -76,7 +76,6 @@ dependencies = [
  "fancy-regex",
  "itertools",
  "md5",
- "nextest",
  "nom",
  "pathfinding",
  "rayon",
@@ -281,12 +280,6 @@ name = "minimal-lexical"
 version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "68354c5c6bd36d73ff3feceb05efa59b6acb7626617f4962be322a825e61f79a"
-
-[[package]]
-name = "nextest"
-version = "0.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f12ea694d270547969e9693ca5b19deed2fe73ef493ef6057e5fe8ecc8384c23"
 
 [[package]]
 name = "nom"
