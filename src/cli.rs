@@ -74,6 +74,12 @@ pub fn run(args: Args) -> Result<()> {
             println!("  Part two: {}", day06::part_two(&input));
             Ok(())
         }
+        7 => {
+            let input = read_input(day)?;
+            println!("  Part one: {}", day07::part_one(&input));
+            println!("  Part two: {}", day07::part_two(&input));
+            Ok(())
+        }
         _ => anyhow::bail!(ParseError::NotImplemented(day)),
     }
 }
