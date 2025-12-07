@@ -74,7 +74,10 @@ impl Direction {
 
 #[derive(Default, Copy, Clone, Debug, PartialEq, Eq, Hash)]
 pub struct Point {
+    /// col pos
     pub x: i64,
+
+    /// row pos
     pub y: i64,
 }
 
