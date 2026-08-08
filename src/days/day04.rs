@@ -1,7 +1,7 @@
 use crate::{Grid, Point};
 
 pub fn part_one(input: &str) -> usize {
-    let grid = Grid::from_str(input);
+    let grid = Grid::parse(input);
     all_tp_locations(&grid)
         .iter()
         .filter(|&&p| tp_neighbor_count_less_than_four(&grid, p))
@@ -9,7 +9,7 @@ pub fn part_one(input: &str) -> usize {
 }
 
 pub fn part_two(input: &str) -> usize {
-    let mut grid = Grid::from_str(input);
+    let mut grid = Grid::parse(input);
     let mut removed = 0;
 
     loop {
@@ -37,7 +37,6 @@ fn remove_tp_at_locations(grid: &mut Grid<char>, locations: Vec<Point>) {
 
 fn tp_neighbor_count_less_than_four(grid: &Grid<char>, p: Point) -> bool {
     grid.neighbors8(p)
-        .into_iter()
         .filter(|&p| grid.get(p).unwrap() == &'@')
         .count()
         < 4

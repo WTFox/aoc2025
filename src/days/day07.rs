@@ -2,7 +2,7 @@ use crate::{Direction, Grid, Point};
 use itertools::Itertools;
 
 pub fn part_one(input: &str) -> isize {
-    let grid = Grid::from_str(input.trim());
+    let grid = Grid::parse(input.trim());
     let start = grid.find_value(&'S').expect("no starting position found");
 
     let mut split_count = 0;
@@ -33,7 +33,7 @@ pub fn part_one(input: &str) -> isize {
         beams = new_beams
             .iter()
             .unique()
-            .map(|&p| p)
+            .copied()
             .collect::<Vec<_>>()
             .clone();
     }
@@ -41,7 +41,7 @@ pub fn part_one(input: &str) -> isize {
 }
 
 pub fn part_two(input: &str) -> usize {
-    let grid = Grid::from_str(input.trim());
+    let grid = Grid::parse(input.trim());
     let start = grid.find_value(&'S').expect("no starting position found");
 
     let mut beams = vec![start];

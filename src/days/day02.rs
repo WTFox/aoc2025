@@ -16,7 +16,7 @@ fn process(input: &str, repeating: bool) -> i64 {
         .flat_map(|rng| {
             let (start, end) = rng
                 .split_once("-")
-                .and_then(|(l, r)| Some((l.parse::<i64>().unwrap(), r.parse::<i64>().unwrap())))
+                .map(|(l, r)| (l.parse::<i64>().unwrap(), r.parse::<i64>().unwrap()))
                 .expect("could not parse number");
             start..=end
         })

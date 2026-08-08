@@ -295,17 +295,25 @@ impl<T> Grid<T> {
 }
 
 impl Grid<char> {
-    pub fn from_str(input: &str) -> Self {
+    pub fn parse(input: &str) -> Self {
+        input.parse().unwrap()
+    }
+}
+
+impl std::str::FromStr for Grid<char> {
+    type Err = std::convert::Infallible;
+
+    fn from_str(input: &str) -> Result<Self, Self::Err> {
         let lines: Vec<&str> = input.lines().collect();
         let height = lines.len();
         let width = lines.first().map(|l| l.len()).unwrap_or(0);
         let cells: Vec<char> = lines.iter().flat_map(|l| l.chars()).collect();
 
-        Grid {
+        Ok(Grid {
             width,
             height,
             cells,
-        }
+        })
     }
 }
 
@@ -366,7 +374,7 @@ mod tests {
     #[test]
     fn parse_grid() {
         let input = "##..\n#..#\n....";
-        let grid = Grid::from_str(input);
+        let grid = Grid::parse(input);
 
         assert_eq!(grid.width(), 4);
         assert_eq!(grid.height(), 3);
@@ -377,7 +385,7 @@ mod tests {
     #[test]
     fn find_start() {
         let input = ".....\n..S..\n.....";
-        let grid = Grid::from_str(input);
+        let grid = Grid::parse(input);
         let start = grid.find_value(&'S');
 
         assert_eq!(start, Some(Point::new(2, 1)));
@@ -392,7 +400,7 @@ mod tests {
 
     #[test]
     fn neighbors() {
-        let grid: Grid<char> = Grid::from_str("...\n.X.\n...");
+        let grid = Grid::parse("...\n.X.\n...");
         let center = Point::new(1, 1);
 
         let valid_neighbors: Vec<_> = center
@@ -409,7 +417,7 @@ mod tests {
         use std::collections::{HashSet, VecDeque};
 
         let input = "#####\n#...#\n#.#.#\n#...#\n#####";
-        let grid = Grid::from_str(input);
+        let grid = Grid::parse(input);
         let start = Point::new(1, 1);
 
         let mut visited: HashSet<Point> = HashSet::new();

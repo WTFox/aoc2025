@@ -35,7 +35,7 @@ fn process_bank(bank: &[i64]) -> i64 {
         let start = i + last_index;
         let stop = bank.len() - 11 + i;
         let (index, largest) = find_largest(bank, start, stop);
-        last_index = index + last_index;
+        last_index += index;
         new_bank.push(largest);
     }
     new_bank

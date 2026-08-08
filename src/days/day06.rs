@@ -10,13 +10,13 @@ pub fn part_one(input: &str) -> i64 {
             .iter()
             .enumerate()
             .filter(|(i, _)| *i != grid.len() - 1)
-            .map(|(_, row)| row.into_iter().nth(i).unwrap())
+            .map(|(_, row)| row.get(i).unwrap())
             .map(|&x| x.parse::<i64>().unwrap())
             .collect::<Vec<_>>();
 
         let res = match *op {
-            "*" => col.iter().fold(1, |acc, x| acc * x),
-            "+" => col.iter().fold(0, |acc, x| acc + x),
+            "*" => col.iter().product::<i64>(),
+            "+" => col.iter().sum::<i64>(),
             _ => todo!(),
         };
         sum += res;
